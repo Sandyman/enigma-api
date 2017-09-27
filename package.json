@@ -2,7 +2,7 @@
   "name": "api-enigma",
   "version": "0.0.1",
   "description": "API for Enigma simulator",
-  "main": "index.js",
+  "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -15,5 +15,10 @@
   "bugs": {
     "url": "https://github.com/Sandyman/enigma-api/issues"
   },
-  "homepage": "https://github.com/Sandyman/enigma-api#readme"
+  "homepage": "https://github.com/Sandyman/enigma-api#readme",
+  "dependencies": {
+    "body-parser": "^1.18.2",
+    "express": "^4.15.5",
+    "mongodb": "^2.2.31"
+  }
 }
