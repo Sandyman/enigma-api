@@ -19,7 +19,13 @@ const handleError = (res, reason, message, code) => {
     res.status(code || 500).json({"error": message});
 };
 
-app.post('/v1/encode', (req, res) => {
+const router = express.Router();
+
+router.get('/', (req, res) => {
+    res.status(200).json({ message: 'Welcome to the Enigma SIM API.' });
+});
+
+router.post('/encode', (req, res) => {
     if (req.token !== process.env.BEARER_TOKEN) {
         return handleError(res, 'Authorisation Failed', 'Header does not contain a Bearer Token', 401);
     }
@@ -48,6 +54,8 @@ app.post('/v1/encode', (req, res) => {
         return handleError(res, '', e.message, e.code);
     }
 });
+
+app.use('/v1', router);
 
 // Initialize the app.
 const server = app.listen(process.env.PORT || 8080, function () {
