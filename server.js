@@ -4,6 +4,11 @@ const bodyParser = require('body-parser');
 const Enigma = require('enigma-sim');
 const express = require('express');
 
+if (!process.env.BEARER_TOKEN) {
+    console.log('No BEARER_TOKEN defined in environment');
+    process.exit(1);
+}
+
 const app = express();
 app.use(express.static(__dirname + '/public'));
 app.use(bearerToken());
