@@ -4,8 +4,6 @@ const bodyParser = require('body-parser');
 const Enigma = require('enigma-sim');
 const express = require('express');
 
-const BEARER_TOKEN = 'p07ajlbxo7z55v3';
-
 const app = express();
 app.use(express.static(__dirname + '/public'));
 app.use(bearerToken());
@@ -17,7 +15,7 @@ const handleError = (res, reason, message, code) => {
 };
 
 app.post('/v1/encode', (req, res) => {
-    if (req.token !== BEARER_TOKEN) {
+    if (req.token !== process.env.BEARER_TOKEN) {
         return handleError(res, 'Authorisation Failed', 'Header does not contain a Bearer Token', 401);
     }
 
