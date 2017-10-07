@@ -41,7 +41,7 @@ router.post('/enigma', (req, res) => {
 router.get('/enigma/:id', (req, res) => {
     const enigmaId = id.decode(req.params.id);
     db.collection(COLLECTION).findOne({ _id: enigmaId }, (err, doc) => {
-        if (err) return handleError(res, 'Database error', 'An error occurred', 500);
+        if (err) return handleError(res, 'Database error', 'Unable to retrieve object', 500);
         if (!doc) return handleError(res, 'Database error', 'Could not find object', 404);
 
         const enigma = doc;
@@ -64,6 +64,7 @@ router.put('/enigma/:id', (req, res) => {
 
         return db.collection(COLLECTION).updateOne({ _id: enigmaId }, updateDoc, (err, doc) => {
             if (err) return handleError(res, 'Database error', 'Unable to update object', 500);
+            if (!doc) return handleError(res, 'Database error', 'Could not find object', 404);
 
             updateDoc._id = req.params.id;
             res.status(200).json(updateDoc);
@@ -102,8 +103,8 @@ router.post('/enigma/:id/encode', (req, res) => {
 router.delete('/enigma/:id', (req, res) => {
     const enigmaId = id.decode(req.params.id);
     db.collection(COLLECTION).deleteOne({ _id: enigmaId }, (err, data) => {
-        if (err) console.log(`Not deleted: ${err.message}`);
-        else console.log(`Successfully deleted id ${enigmaId}`);
+        if (err) console.log(`Error deleting: ${err.message}`);
+        else console.log(`Successfully deleted ${data.deletedCount} objects`);
     });
     return res.status(202).json(req.params.id);
 });
