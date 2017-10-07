@@ -5,9 +5,7 @@ const handleError = require('../lib/handle-error');
 const router = express.Router();
 
 // Just a simple message for the root path
-router.get('/', (req, res) => {
-    res.status(200).json({ message: 'Welcome to the Enigma SIM API.' });
-});
+router.get('/', (req, res) => res.status(200).json({ message: 'Welcome to the Enigma SIM API Version 1.' }));
 
 // A POST endpoint for encoding a message
 router.post('/encode', (req, res) => {
