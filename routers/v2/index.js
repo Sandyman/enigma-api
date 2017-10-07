@@ -63,17 +63,12 @@ router.put('/enigma/:id', (req, res) => {
  * Encode a message
  */
 router.post('/enigma/:id/encode', (req, res) => {
-    console.log(req.body);
     const { message, rotors } = req.body;
-    if (!message) {
-        return handleError(res, 'Missing information', 'Body contains no message');
-    }
-    if (!rotors) {
-        return handleError(res, 'Missing information', 'Body contains no rotors');
-    }
+    if (!message) return handleError(res, 'Missing information', 'Body contains no message');
+    if (!rotors) return handleError(res, 'Missing information', 'Body contains no rotors');
 
     const enigmaId = id.decode(req.params.id);
-    db.collection(COLLECTION).findOne({ _id: enigmaId }, (err, doc) => {
+    return db.collection(COLLECTION).findOne({ _id: enigmaId }, (err, doc) => {
         if (err) return handleError(res, 'Database error', 'Could not find object', 400);
 
         try {
@@ -90,9 +85,13 @@ router.post('/enigma/:id/encode', (req, res) => {
 /**
  * Delete an Enigma object
  */
-router.delete('enigma/:id', (req, res) => {
+router.delete('/enigma/:id', (req, res) => {
     const enigmaId = id.decode(req.params.id);
-
+    db.collection(COLLECTION).deleteOne({ _id: enigmaId }, (err, data) => {
+        if (err) console.log(`Not deleted: ${err.message}`);
+        else console.log(`Successfully deleted id ${enigmaId}`);
+    });
+    return res.status(202).json(req.params.id);
 });
 
 /**
