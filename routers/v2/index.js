@@ -41,9 +41,11 @@ router.post('/enigma', (req, res) => {
 router.get('/enigma/:id', (req, res) => {
     const enigmaId = id.decode(req.params.id);
     db.collection(COLLECTION).findOne({ _id: enigmaId }, (err, doc) => {
-        if (err) return handleError(res, 'Database error', 'Could not find object', 400);
+        if (err) return handleError(res, 'Database error', 'An error occurred', 500);
+        if (!doc) return handleError(res, 'Database error', 'Could not find object', 404);
 
         const enigma = doc;
+        console.log(enigma);
         enigma._id = id.encode(enigma._id);
         return res.status(200).json(enigma);
     });
