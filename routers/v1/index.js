@@ -9,10 +9,6 @@ router.get('/', (req, res) => res.status(200).json({ message: 'Welcome to the En
 
 // A POST endpoint for encoding a message
 router.post('/encode', (req, res) => {
-    if (req.token !== process.env.BEARER_TOKEN) {
-        return handleError(res, 'Authorisation Failed', 'Header does not contain a Bearer Token', 401);
-    }
-
     const body = req.body;
 
     if (_.isEmpty(body)) {
@@ -34,7 +30,7 @@ router.post('/encode', (req, res) => {
         };
         res.status(200).json(response);
     } catch (e) {
-        return handleError(res, '', e.message, e.code);
+        return handleError(res, 'Internal Error', e.message, e.code);
     }
 });
 
