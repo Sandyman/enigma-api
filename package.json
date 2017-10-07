@@ -19,7 +19,7 @@
   "homepage": "https://github.com/Sandyman/enigma-api#readme",
   "dependencies": {
     "body-parser": "^1.18.2",
-    "enigma-sim": "^0.1.0",
+    "enigma-sim": "^0.2.0",
     "express": "^4.16.1",
     "express-bearer-token": "^2.1.0",
     "underscore": "^1.8.3"

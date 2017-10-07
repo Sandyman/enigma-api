@@ -74,9 +74,9 @@ encodeurl@~1.0.1:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/encodeurl/-/encodeurl-1.0.1.tgz#79e3d58655346909fe6f0f45a5de68103b294d20"
 
-enigma-sim@^0.1.0:
-  version "0.1.0"
-  resolved "https://registry.yarnpkg.com/enigma-sim/-/enigma-sim-0.1.0.tgz#2b64025bc537b21708ebd58fdec5a87275ceecc3"
+enigma-sim@^0.2.0:
+  version "0.2.0"
+  resolved "https://registry.yarnpkg.com/enigma-sim/-/enigma-sim-0.2.0.tgz#152f1f15a5ef0f2c60044c444e07fcf46df3bc50"
   dependencies:
     auto-bind "^1.1.0"
     underscore "^1.8.3"
