@@ -13,9 +13,7 @@ const router = express.Router();
 /**
  * Just a simple message for the root path
  */
-router.get('/', (req, res) => {
-    res.status(200).json({ message: 'Welcome to the Enigma SIM API Version 2.' });
-});
+router.get('/', (req, res) => res.status(200).json({ message: 'Welcome to the Enigma SIM API Version 2.' }));
 
 /**
  * Creates a new Enigma object
@@ -56,7 +54,21 @@ router.get('/enigma/:id', (req, res) => {
  */
 router.put('/enigma/:id', (req, res) => {
     const enigmaId = id.decode(req.params.id);
+    const updateDoc = req.body;
+    delete updateDoc._id;
 
+    try {
+        new Enigma(updateDoc);
+
+        return db.collection(COLLECTION).updateOne({ _id: enigmaId }, updateDoc, (err, doc) => {
+            if (err) return handleError(res, 'Database error', 'Unable to update object', 500);
+
+            updateDoc._id = req.params.id;
+            res.status(200).json(updateDoc);
+        });
+    } catch (e) {
+        return handleError(res, 'Enigma error', e.message, e.code);
+    }
 });
 
 /**
