@@ -16,6 +16,12 @@ let db;
 const app = express();
 app.use(express.static(__dirname + '/public'));
 app.use(bearerToken());
+app.use((req, res, next) => {
+    if (req.token !== process.env.BEARER_TOKEN) {
+        return res.status(401).json({ errors: 'Unauthorized access: bearer token invalid or missing' })
+    }
+    next();
+});
 app.use(bodyParser.json());
 
 // Connect to MongoDB
