@@ -47,7 +47,7 @@ router.get('/enigma/:id', (req, res) => {
 
         const enigma = doc;
         enigma._id = id.encode(enigma._id);
-        return res.status(201).json(enigma);
+        return res.status(200).json(enigma);
     });
 });
 
@@ -63,7 +63,27 @@ router.put('/enigma/:id', (req, res) => {
  * Encode a message
  */
 router.post('/enigma/:id/encode', (req, res) => {
+    console.log(req.body);
+    const { message, rotors } = req.body;
+    if (!message) {
+        return handleError(res, 'Missing information', 'Body contains no message');
+    }
+    if (!rotors) {
+        return handleError(res, 'Missing information', 'Body contains no rotors');
+    }
+
     const enigmaId = id.decode(req.params.id);
+    db.collection(COLLECTION).findOne({ _id: enigmaId }, (err, doc) => {
+        if (err) return handleError(res, 'Database error', 'Could not find object', 400);
+
+        try {
+            const enigma = new Enigma(doc);
+            const result = enigma.onMessage(rotors, message);
+            return res.status(200).json({ result });
+        } catch (e) {
+            return handleError(res, 'Enigma error', e.message, e.code);
+        }
+    });
 
 });
 
