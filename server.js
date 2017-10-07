@@ -5,7 +5,6 @@ const mongodb = require('mongodb');
 const routerV1 = require('./routers/v1');
 const routerV2 = require('./routers/v2');
 
-const ObjectID = mongodb.ObjectID;
 const MongoClient = mongodb.MongoClient;
 if (!process.env.BEARER_TOKEN) {
     console.log('No BEARER_TOKEN defined in environment');
