@@ -1,17 +1,9 @@
 const _ = require('underscore');
 const express = require('express');
 const Enigma = require('enigma-sim');
-const memjs = require('memjs');
+const cache = require('../lib/cache');
 const id = require('../lib/id');
 const handleError = require('../lib/handle-error');
-
-/**
- * Connect to memcache
- */
-const cache = memjs.Client.create(process.env.MEMCACHEDCLOUD_SERVERS, {
-    username: process.env.MEMCACHEDCLOUD_USERNAME,
-    password: process.env.MEMCACHEDCLOUD_PASSWORD
-});
 
 const COLLECTION = 'enigmas';
 
@@ -30,14 +22,14 @@ router.get('/', (req, res) => res.status(200).json({ message: 'Welcome to the En
 router.post('/enigma', (req, res) => {
     const config = req.body;
     try {
-        const enigma = new Enigma(config);
+        new Enigma(config);
 
         db.collection(COLLECTION).insertOne(config, (err, result) => {
             if (err) return res.status(500).json({ errors: 'Could not create object in database' });
 
             const cfg = result.ops[0];
             cfg._id = id.encode(cfg._id);
-            cache.set(cfg._id, enigma);
+            cache.set(cfg._id, config);
             return res.status(201).json(cfg);
         });
     } catch (e) {
@@ -77,7 +69,7 @@ router.put('/enigma/:id', (req, res) => {
             if (!doc) return handleError(res, 'Database error', 'Could not find object', 404);
 
             updateDoc._id = req.params.id;
-            cache.set(updateDoc._id, enigma);
+            cache.set(req.params.id, enigma);
             res.status(200).json(updateDoc);
         });
     } catch (e) {
@@ -93,27 +85,29 @@ router.post('/enigma/:id/encode', (req, res) => {
     if (!message) return handleError(res, 'Missing information', 'Body contains no message');
     if (!rotors) return handleError(res, 'Missing information', 'Body contains no rotors');
 
-    let enigma;
+    let config = cache.get(req.params.id);
+    if (config) {
+        const enigma = new Enigma(config);
+        const result = enigma.onMessage(rotors, message);
+        return res.status(200).json({ result });
+    }
+
+    // Actual ID in database
     const enigmaId = id.decode(req.params.id);
-    cache.get(req.params.id, (err, value, key) => {
-        if (value !== null) {
-            enigma = value;
+
+    // Not found in cache, so retrieve configuration from database
+    return db.collection(COLLECTION).findOne({ _id: enigmaId }, (err, doc) => {
+        if (err) return handleError(res, 'Database error', 'Could not find object', 400);
+
+        try {
+            delete doc._id;
+            const enigma = new Enigma(doc);
+            cache.set(req.params.id, doc);
             const result = enigma.onMessage(rotors, message);
             return res.status(200).json({ result });
+        } catch (e) {
+            return handleError(res, 'Enigma error', e.message, e.code);
         }
-
-        // Not found in cache, so retrieve configuration from database
-        return db.collection(COLLECTION).findOne({ _id: enigmaId }, (err, doc) => {
-            if (err) return handleError(res, 'Database error', 'Could not find object', 400);
-
-            try {
-                enigma = new Enigma(doc);
-                const result = enigma.onMessage(rotors, message);
-                return res.status(200).json({ result });
-            } catch (e) {
-                return handleError(res, 'Enigma error', e.message, e.code);
-            }
-        });
     });
 });
 
