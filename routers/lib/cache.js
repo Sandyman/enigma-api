@@ -19,7 +19,7 @@ const get = (key) => {
     if (!item) return null;
 
     const now = moment();
-    let value = Object.assign({}, item.value);
+    const value = Object.assign({}, item.value);
     item.accessed_at = now.unix();
     if (!!item.expires && item.expires_at < now.unix()) {
         setTimeout(() => delete cache[key], 0);
