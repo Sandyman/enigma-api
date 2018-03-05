@@ -105,11 +105,11 @@ etag@~1.8.1:
   version "1.8.1"
   resolved "https://registry.yarnpkg.com/etag/-/etag-1.8.1.tgz#41ae2eeb65efa62268aebfea83ac7d79299b0887"
 
-express-bearer-token@^2.1.0:
-  version "2.1.0"
-  resolved "https://registry.yarnpkg.com/express-bearer-token/-/express-bearer-token-2.1.0.tgz#d5c823c4d180f9d2b08798fced3dde9cc9c4906e"
+express-bearer-token@^2.1.1:
+  version "2.1.1"
+  resolved "https://registry.yarnpkg.com/express-bearer-token/-/express-bearer-token-2.1.1.tgz#c66ae99867fea56ef25760b9feda179f783e708d"
 
-express@^4.16.1:
+express@^4.16.2:
   version "4.16.2"
   resolved "https://registry.yarnpkg.com/express/-/express-4.16.2.tgz#e35c6dfe2d64b7dca0a5cd4f21781be3299e076c"
   dependencies:
@@ -193,9 +193,9 @@ media-typer@0.3.0:
   version "0.3.0"
   resolved "https://registry.yarnpkg.com/media-typer/-/media-typer-0.3.0.tgz#8710d7af0aa626f8fffa1ce00168545263255748"
 
-memjs@^1.0.0-rc.1:
-  version "1.0.0-rc.1"
-  resolved "https://registry.yarnpkg.com/memjs/-/memjs-1.0.0-rc.1.tgz#2f320f04f5de43118faa154c89a11407d7b53f71"
+memjs@^1.1.0:
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/memjs/-/memjs-1.1.0.tgz#7d2cd2e0833de697cec5dcb8b2b3a32cffbab5bf"
 
 merge-descriptors@1.0.1:
   version "1.0.1"
@@ -219,28 +219,28 @@ mime@1.4.1:
   version "1.4.1"
   resolved "https://registry.yarnpkg.com/mime/-/mime-1.4.1.tgz#121f9ebc49e3766f311a76e1fa1c8003c4b03aa6"
 
-moment@^2.18.1:
-  version "2.19.2"
-  resolved "https://registry.yarnpkg.com/moment/-/moment-2.19.2.tgz#8a7f774c95a64550b4c7ebd496683908f9419dbe"
+moment@^2.21.0:
+  version "2.21.0"
+  resolved "https://registry.yarnpkg.com/moment/-/moment-2.21.0.tgz#2a114b51d2a6ec9e6d83cf803f838a878d8a023a"
 
-mongodb-core@2.1.17:
-  version "2.1.17"
-  resolved "https://registry.yarnpkg.com/mongodb-core/-/mongodb-core-2.1.17.tgz#a418b337a14a14990fb510b923dee6a813173df8"
+mongodb-core@2.1.19:
+  version "2.1.19"
+  resolved "https://registry.yarnpkg.com/mongodb-core/-/mongodb-core-2.1.19.tgz#00fbd5e5a3573763b9171cfd844e60a8f2a3a18b"
   dependencies:
     bson "~1.0.4"
     require_optional "~1.0.0"
 
-mongodb@^2.2.31:
-  version "2.2.33"
-  resolved "https://registry.yarnpkg.com/mongodb/-/mongodb-2.2.33.tgz#b537c471d34a6651b48f36fdbf29750340e08b50"
+mongodb@^2.2.35:
+  version "2.2.35"
+  resolved "https://registry.yarnpkg.com/mongodb/-/mongodb-2.2.35.tgz#cd1b5af8a9463e3f9a787fa5b3d05565579730f9"
   dependencies:
     es6-promise "3.2.1"
-    mongodb-core "2.1.17"
+    mongodb-core "2.1.19"
     readable-stream "2.2.7"
 
-monguscate@^1.0.2:
-  version "1.0.2"
-  resolved "https://registry.yarnpkg.com/monguscate/-/monguscate-1.0.2.tgz#61b6b87ef623154920504624b895f6861106996e"
+monguscate@^1.1.0:
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/monguscate/-/monguscate-1.1.0.tgz#082edd46d1ea95062f859df06ed7341d98c0ae64"
   dependencies:
     string "~3.0.0"
 
